@@ -4,29 +4,21 @@ import jax.numpy as jnp
 import os
 
 
-def load_data_and_mask(sub, hemi, src_dir, src_mask_dir):
+def load_data_and_mask(src_fmri, src_mask):
     """
     Loads fMRI data and its corresponding mask for a given subject and hemisphere.
 
     Parameters:
-    - sub (str): The subject ID.
-    - hemi (str): The hemisphere ('L' or 'R') to load data for.
-    - src_dir (str): The source directory where the fMRI data is located.
-    - src_mask_dir (str): The source directory where the mask data is located.
+    - src_fmri (str): The file path where the fMRI data is located.
+    - src_mask (str): The file path where the mask data is located.
 
     Returns:
     - img_clean (jax.numpy.array): The cleaned and filtered fMRI data.
     - masker (NiftiMasker): The NiftiMasker object used for cleaning and filtering.
     - TR (float): The repetition time (TR) of the fMRI data.
     """
-    src_fMRI = os.path.join(
-        src_dir,
-        sub,
-        "func",
-        f"{sub}_task-2step_run-1_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz",
-    )
-    src_mask = os.path.join(src_mask_dir, f"{hemi}_hip.nii.gz")
-    nii_img = nib.load(src_fMRI)
+
+    nii_img = nib.load(src_fmri)
     nii_img_msk = nib.load(src_mask)
     TR = nii_img.header["pixdim"][4]
     # Define filter parameters
