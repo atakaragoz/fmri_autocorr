@@ -1,0 +1,15 @@
+name: fmrijax
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - numpy
+  - jax
+  - nilearn
+  - nibabel
+  - jupyter
+  - tensorboard
+  - tqdm
+  - snakeviz
+  - optax
+  - jaxopt
